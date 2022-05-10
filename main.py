@@ -56,7 +56,7 @@ def aichat(func):
     @wraps(func)
     async def ai_check(e):
         if e.is_private:
-            await func(e)
+            return
         elif Chat.is_ai_chat(e.chat_id):
             await func(e)
         else:
@@ -147,8 +147,6 @@ async def disable_ai(e):
 @aichat
 async def kuki_handler(e):
     c = CONV()
-    if e.text.startswith("/start"):
-        return
     await e.reply(c.message(e.raw_text))
 
 
