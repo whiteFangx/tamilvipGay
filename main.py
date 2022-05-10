@@ -109,7 +109,6 @@ async def setchat(e):
 @cbk(pattern="enable_(.*)")
 async def enable_ai(e):
     user = int(e.pattern_match.group(1))
-    await kuki.get_permissions(e.chat_id, e.sender_id)
     if not user == e.sender_id:
         return await e.answer("You ain't the one who used this command.", alert=True)
     elif Chat.is_ai_chat(e.chat_id):
@@ -125,7 +124,6 @@ async def enable_ai(e):
 @cbk(pattern="disable_(.*)")
 async def disable_ai(e):
     user = int(e.pattern_match.group(1))
-    await kuki.get_permissions(e.chat_id, e.sender_id)
     if not user == e.sender_id:
         return await e.answer("You aint the one who used this command.", alert=True)
     elif not Chat.is_ai_chat(e.chat_id):
