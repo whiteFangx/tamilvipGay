@@ -36,14 +36,14 @@ def cbk(**args):
 def ryts(func):
     @wraps(func)
     async def admin_check(e):
+        if e.is_private:
+                return await func(e)
         try:
             perms = await e.client.get_permissions(e.chat_id, e.sender_id)
             if not perms.is_admin:
                 return await e.reply("You are not an admin!")
             elif not perms.change_info:
                 return await e.reply("You don't have permission to change info!")
-            elif e.is_private:
-                return await e.reply("You can't use this command in a private chat!")
             else:
                 return await func(e)
         except (UserNotParticipantError, ValueError):
