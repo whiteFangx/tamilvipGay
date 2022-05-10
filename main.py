@@ -118,8 +118,8 @@ async def enable_ai(e):
     elif Chat.is_ai_chat(e.chat_id):
         return await e.edit("AI is already enabled in this chat.")
     await e.edit(
-        "Successfully enabled Kuki Ai in **{}** by [{}](tg://user?id={})".format(
-            e.chat.title, e.sender.first_name, e.sender_id
+        "Successfully enabled Kuki Ai by [{}](tg://user?id={})".format(
+            e.sender.first_name, e.sender_id
         )
     )
     Chat.add_chat(e.chat_id)
@@ -134,8 +134,8 @@ async def disable_ai(e):
     elif not Chat.is_ai_chat(e.chat_id):
         return await e.edit("AI is already disabled in this chat.")
     await e.edit(
-        "Successfully disabled Kuki Ai in **{}** by [{}](tg://user?id={})".format(
-            e.chat.title, e.sender.first_name, e.sender_id
+        "Successfully disabled Kuki Ai in by [{}](tg://user?id={})".format(
+           e.sender.first_name, e.sender_id
         )
     )
     Chat.rm_chat(e.chat_id)
