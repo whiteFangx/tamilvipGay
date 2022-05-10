@@ -100,9 +100,6 @@ async def start(e):
 @cmd(pattern="setchat")
 @ryts
 async def setchat(e):
-    if e.is_private:
-        await e.reply("This command can't be used in private chats.")
-        return
     buttons = Button.inline(
         "Enable", data="enable_{}".format(e.sender_id)
     ), Button.inline("Disable", data="disable_{}".format(e.sender_id))
@@ -134,7 +131,7 @@ async def disable_ai(e):
     elif not Chat.is_ai_chat(e.chat_id):
         return await e.edit("AI is already disabled in this chat.")
     await e.edit(
-        "Successfully disabled Kuki Ai in by [{}](tg://user?id={})".format(
+        "Successfully disabled Kuki Ai by [{}](tg://user?id={})".format(
            e.sender.first_name, e.sender_id
         )
     )
