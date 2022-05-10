@@ -140,6 +140,8 @@ async def disable_ai(e):
 @aichat
 async def kuki_handler(e):
     c = CONV()
+    if e.text.startswith(("/", "!")):
+        return
     await e.reply(c.message(e.raw_text))
 
 
