@@ -54,10 +54,8 @@ def ryts(func):
 
 def aichat(func):
     @wraps(func)
-    async def ai_check(e):
-        if e.is_private:
-            return
-        elif Chat.is_ai_chat(e.chat_id):
+    async def ai_check(e): 
+        if Chat.is_ai_chat(e.chat_id):
             await func(e)
         else:
             return
