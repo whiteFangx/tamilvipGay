@@ -81,7 +81,7 @@ class CONV:
                 timeout=10,
             )
             return txt.json()["reply"]
-        except (JSONDecodeError, TimeoutError):
+        except TimeoutError:
             return "KUKI is not responding. Try again later."
         except Exception as e:
             return e
@@ -99,38 +99,37 @@ async def start(e):
 @ryts
 async def setchat(e):
     buttons = Button.inline(
-        "Enable", data="enable_{}".format(e.sender_id)
-    ), Button.inline("Disable", data="disable_{}".format(e.sender_id))
+        "Enable", data=f"enable_{e.sender_id}"
+    ), Button.inline("Disable", data=f"disable_{e.sender_id}")
+
     await e.reply("AI chat setup", buttons=buttons)
 
 
 @cbk(pattern="enable_(.*)")
 async def enable_ai(e):
     user = int(e.pattern_match.group(1))
-    if not user == e.sender_id:
+    if user != e.sender_id:
         return await e.answer("You ain't the one who used this command.", alert=True)
     elif Chat.is_ai_chat(e.chat_id):
         return await e.edit("AI is already enabled in this chat.")
     await e.edit(
-        "Successfully enabled Kuki Ai by [{}](tg://user?id={})".format(
-            e.sender.first_name, e.sender_id
-        )
+        f"Successfully enabled Kuki Ai by [{e.sender.first_name}](tg://user?id={e.sender_id})"
     )
+
     Chat.add_chat(e.chat_id)
 
 
 @cbk(pattern="disable_(.*)")
 async def disable_ai(e):
     user = int(e.pattern_match.group(1))
-    if not user == e.sender_id:
+    if user != e.sender_id:
         return await e.answer("You aint the one who used this command.", alert=True)
     elif not Chat.is_ai_chat(e.chat_id):
         return await e.edit("AI is already disabled in this chat.")
     await e.edit(
-        "Successfully disabled Kuki Ai by [{}](tg://user?id={})".format(
-           e.sender.first_name, e.sender_id
-        )
+        f"Successfully disabled Kuki Ai by [{e.sender.first_name}](tg://user?id={e.sender_id})"
     )
+
     Chat.rm_chat(e.chat_id)
 
 
